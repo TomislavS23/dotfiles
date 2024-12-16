@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Backup commands that utilize rsync.
+alias backup='sudo rsync -aAxXHv'
+alias fullbackup='sudo rsync -aAxXHv --exclude='/dev/*' --exclude='/proc/*' --exclude='/sys/*' --exclude='/tmp/*' --exclude='/run/*' --exclude='/mnt/*' --exclude='/media/*' --exclude='/lost+found/''
+
+# Clear only pacman cache.
+alias pac-clear='sudo pacman -Sc'
+
+# Clear cache for both yay and pacman.
+alias yay-clear='yay -Sc'
+
+# Shorthand aliases for some basic systemctl commands.
+alias disable-service='sudo systemctl disable'
+alias enable-service='sudo systemctl enable'
+alias service-status='sudo systemctl status'
+alias reload-service='sudo systemctl restart'
+
+# GPG Encryption
+alias encrypt='gpg --symmetric'
+alias decrypt='gpg --use-embedded-filename --decrypt'
