@@ -18,9 +18,14 @@ if [ -e ~/.bashrc ]; then
     mv ~/.bashrc ~/.backup
 fi
 
+if [ -e ~/.exports ]; then
+    echo "Backing up existing .exports to $backup_dir"
+    mv ~/.exports ~/.backup
+fi
+
 # Create symbolic links for dotfiles
 ln -sf ~/dotfiles/.aliases ~/.aliases
-ln -sf ~/dotfiles/.paths ~/.paths
+ln -sf ~/dotfiles/.exports ~/.exports
 ln -sf ~/dotfiles/.gitconfig ~/.gitconfig
 ln -sf ~/dotfiles/.bashrc ~/.bashrc
 
