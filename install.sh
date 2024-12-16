@@ -1,32 +1,37 @@
 #!/bin/bash
 
-# Create hidden backup folder
+# Backup directory
 backup_dir=~/.backup
+
+# Create hidden backup folder
 if [ ! -d "$backup_dir" ]; then
     mkdir "$backup_dir"
     echo "Created hidden backup directory at $backup_dir"
+else
+    echo "Backup directory already exists at $backup_dir"
 fi
 
-# Backup existing dotfiles to the hidden backup folder
-if [ -e ~/.gitconfig ]; then
-    echo "Backing up existing .gitconfig to $backup_dir"
-    mv ~/.gitconfig ~/.backup
-fi
+# List of all dotfiles
+dotfiles=(.gitconfig .bashrc .exports .aliases)
 
-if [ -e ~/.bashrc ]; then
-    echo "Backing up existing .bashrc to $backup_dir"
-    mv ~/.bashrc ~/.backup
-fi
-
-if [ -e ~/.exports ]; then
-    echo "Backing up existing .exports to $backup_dir"
-    mv ~/.exports ~/.backup
-fi
+# Backup existing dotfiles
+for dotfile in "${dotfiles[@]}"; do
+    if [ -e ~/$dotfile ]; then
+        echo "Backing up existing ~$dotfile to $backup_dir"
+        mv ~/$dotfile "$backup_dir"
+    else
+        echo "No existing ~$dotfile found, skipping backup."
+    fi
+done
 
 # Create symbolic links for dotfiles
-ln -sf ~/dotfiles/.aliases ~/.aliases
-ln -sf ~/dotfiles/.exports ~/.exports
-ln -sf ~/dotfiles/.gitconfig ~/.gitconfig
-ln -sf ~/dotfiles/.bashrc ~/.bashrc
+for dotfile in "${dotfiles[@]}"; do
+    if [ -e ~/dotfiles/$dotfile ]; then
+        ln -sf ~/dotfiles/$dotfile ~/$dotfile
+        echo "Created symbolic link for ~$dotfile"
+    else
+        echo "Warning: ~/dotfiles/$dotfile does not exist. Skipping symbolic link creation."
+    fi
+done
 
 echo "Dotfiles have been linked!"
