@@ -10,12 +10,12 @@ fi
 # Backup existing dotfiles to the hidden backup folder
 if [ -e ~/.gitconfig ]; then
     echo "Backing up existing .gitconfig to $backup_dir"
-    mv ~/.gitconfig ~/backup
+    mv ~/.gitconfig ~/.backup
 fi
 
 if [ -e ~/.bashrc ]; then
     echo "Backing up existing .bashrc to $backup_dir"
-    mv ~/.bashrc ~/backup
+    mv ~/.bashrc ~/.backup
 fi
 
 # Create symbolic links for dotfiles
